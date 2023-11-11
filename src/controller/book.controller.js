@@ -1,6 +1,6 @@
 const bookServices = require("../services/books.service");
-const getAllBooks = (req, res) => {
-  const allbooks = bookServices.getAllBooks();
+const getAllBooks = async (req, res) => {
+  const allbooks = await bookServices.getAllBooks();
   res.send({ status: "OK", data: allbooks });
 };
 
@@ -8,8 +8,21 @@ const getOneBook = (req, res) => {
   res.send("Here is just one book!");
 };
 
-const createBook = (req, res) => {
-  res.send("Let us create a new book");
+const createBook = async (req, res) => {
+  const { body } = req;
+  const newBook = {
+    title: body.title,
+    authorName: body.authorName,
+    description: body.description,
+    price: body.price,
+    year: body.year,
+    isbn: body.isbn,
+    pageCount: body.pageCount,
+    tag: body.tag,
+  };
+  const createdBook = await bookServices.createBook(newBook);
+  console.log(createdBook)
+  res.status(201).send({status: "OK", data: createdBook})
 };
 
 const updateBook = (req, res) => {

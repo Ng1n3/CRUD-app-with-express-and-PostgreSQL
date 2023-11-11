@@ -16,9 +16,7 @@ Book.init(
       allowNull: false,
       unique: true,
       validate: {
-        isAlpha: true,
-        notEmpty: true,
-        len: [5, 50],
+        len: [5, 255],
       },
     },
     authorName: {
@@ -34,7 +32,14 @@ Book.init(
       type: DataTypes.TEXT,
       allowNull: true,
       validate: {
-        len: [2, 100],
+        len: [2, 500],
+      },
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: 4000,
       },
     },
     year: {
@@ -60,9 +65,6 @@ Book.init(
     tag: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true,
-      validate: {
-        isAlpha: true,
-      },
     },
   },
   {
@@ -72,5 +74,5 @@ Book.init(
   }
 );
 
-
 module.exports = Book;
+
