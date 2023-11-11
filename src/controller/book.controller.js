@@ -1,8 +1,7 @@
-const bookModel = require("../models/book.model");
-
-const getAllBooks = async (req, res) => {
-  const allBooks = await bookModel.findAll();
-  return allBooks;
+const bookServices = require("../services/books.service");
+const getAllBooks = (req, res) => {
+  const allbooks = bookServices.getAllBooks();
+  res.send({ status: "OK", data: allbooks });
 };
 
 const getOneBook = (req, res) => {
