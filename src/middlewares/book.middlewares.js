@@ -3,11 +3,12 @@ const checkBody = (req, res, next) => {
   if (!req.body) {
     res.status(400).send({
       status: "FAILED",
-      message: "Sorry, user must have a body",
+      message:
+        "Sorry, sorry, one of the following is missing;\ntitle\nauthorName\nprice",
     });
   } else {
-    next()
+    next();
   }
 };
 
-module.exports = {checkBody};
+module.exports = { checkBody };

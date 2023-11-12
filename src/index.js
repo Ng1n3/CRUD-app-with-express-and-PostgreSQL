@@ -7,6 +7,7 @@ const PORT = process.env.PORT;
 const app = express();
 
 //middleware
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/api/v1/books", v1BookRouter);
 
@@ -18,4 +19,3 @@ sequelize
   .catch((error) => {
     console.error("Error syncing Sequelize models:", error);
   });
-  

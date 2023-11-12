@@ -77,6 +77,9 @@ Book.init(
     tag: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true,
+      validate: {
+        isAlphabeticArray: validateArrayAlphabet,
+      },
     },
   },
   {
