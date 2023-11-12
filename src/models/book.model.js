@@ -4,6 +4,19 @@ const sequelize = require("../db/sequelize");
 
 class Book extends Model {}
 
+function validateArrayAlphabet(value) {
+  if (!Array.isArray(value)) {
+    throw new Error("Input must be an array");
+  }
+
+  const validateArrayAlphabet = /^[a-zA-Z\s]+$/;
+  if (!value.every((element) => validateArrayAlphabet.test(element))) {
+    throw new Error(
+      "Array must contain only alphabet characters with optional whitespaces."
+    );
+  }
+}
+
 Book.init(
   {
     id: {
@@ -20,14 +33,13 @@ Book.init(
       },
     },
     authorName: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
       validate: {
-        isAlpha: true,
-        notEmpty: true,
-        len: [3, 30],
+        isAlphabeticArray: validateArrayAlphabet,
       },
     },
+
     description: {
       type: DataTypes.TEXT,
       allowNull: true,
@@ -75,4 +87,3 @@ Book.init(
 );
 
 module.exports = Book;
-

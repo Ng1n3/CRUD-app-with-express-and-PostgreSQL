@@ -1,26 +1,32 @@
 const bookModel = require("../models/book.model");
 
-const getAllBooks = async () => {
-  const allBooks = await bookModel.findAll();
+const getAllBooks = () => {
+  const allBooks = bookModel.findAll();
   return allBooks;
 };
 
-const getOneBook = (req, res) => {
-  res.send("Here is just one book!");
+const getOneBook = (bookId) => {
+  const book = bookModel.findByPk(bookId);
+  return book;
 };
 
-const createBook = async (newBook) => {
+const createBook = (newBook) => {
   const bookToInsert = newBook;
-  const createdBook = await bookModel.create(bookToInsert);
+  const createdBook = bookModel.create(bookToInsert);
   return createdBook;
 };
 
-const updateBook = (req, res) => {
-  res.send("I just changed this book");
+const updateBook = async (bookId, newupdate) => {
+  const updatedBook = await bookModel.update(newupdate, {
+    where: {
+      id: bookId,
+    },
+  });
+  return updatedBook;
 };
 
-const deleteABook = (req, res) => {
-  res.send("I just deleted this book");
+const deleteABook = async (bookId) => {
+  const deletedbook = bookModel.destroy({ where: { id: bookId } });
 };
 
 module.exports = {

@@ -4,8 +4,15 @@ const getAllBooks = async (req, res) => {
   res.send({ status: "OK", data: allbooks });
 };
 
-const getOneBook = (req, res) => {
-  res.send("Here is just one book!");
+const getOneBook = async (req, res) => {
+  const {
+    params: { bookId },
+  } = req;
+  if (!bookId) {
+    return;
+  }
+  const book = await bookServices.getOneBook(bookId);
+  res.send({ status: "OK", data: book });
 };
 
 const createBook = async (req, res) => {
@@ -21,16 +28,31 @@ const createBook = async (req, res) => {
     tag: body.tag,
   };
   const createdBook = await bookServices.createBook(newBook);
-  console.log(createdBook)
-  res.status(201).send({status: "OK", data: createdBook})
+  res.status(201).send({ status: "OK", data: createdBook });
 };
 
-const updateBook = (req, res) => {
-  res.send("I just changed this book");
+const updateBook = async (req, res) => {
+  const {
+    body,
+    params: { bookId },
+  } = req;
+  if (!bookId) {
+    return;
+  }
+
+  const updatedBook = await bookServices.updateBook(bookId, body);
+  res.send({ status: "OK", data: updatedBook });
 };
 
-const deleteABook = (req, res) => {
-  res.send("I just deleted this book");
+const deleteABook = async (req, res) => {
+  const {
+    params: { bookId },
+  } = req;
+  if (!bookId) {
+    return;
+  }
+  bookServices.deleteABook(bookId);
+  res.status(204).send({ status: "OK" });
 };
 
 module.exports = {
@@ -40,3 +62,4 @@ module.exports = {
   updateBook,
   deleteABook,
 };
+
