@@ -1,31 +1,37 @@
 const sequelize = require("../db/sequelize");
 const bookModel = require("../models/book.model");
-
+const { Op } = require("sequelize");
 const getAllBooks = async (filterParams) => {
   try {
     const { filter, sort, page } = filterParams;
-    console.log(filter);
     const pageSize = 10;
 
     // Buid the where clause for filtering
     const whereClause = {};
 
-    if(filter && filter.year) {
-        whereClause.year = filter.year;
+    if (filter && filter.year) {
+      whereClause.year = filter.year;
     }
 
-    if(filter && filter.price) {
-        whereClause.price  = filter.price;
+    if (filter && filter.price) {
+      whereClause.price = filter.price;
     }
 
-    if(filter && filter.isbn) {
-        whereClause.isbn = filter.isbn;
+    if (filter && filter.isbn) {
+      whereClause.isbn = filter.isbn;
     }
 
     if (filter && filter.authorName) {
       whereClause.authorName = {
-        [Op.iLike]: `%${filter.authorName}%`,
+        [Op.contains]: [filter.authorName],
       };
+      console.log(whereClause.authorName);
+    }
+
+    if(filter && filter.tag) {
+        whereClause.tag = {
+            [Op.contains]: [filter.tag],
+        }
     }
 
     //Build the order clause for sorting

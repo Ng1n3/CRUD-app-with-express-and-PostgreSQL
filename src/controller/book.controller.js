@@ -1,10 +1,9 @@
 const bookServices = require("../services/books.service");
 const getAllBooks = async (req, res) => {
   try {
-      const { year, title, isbn, tags, price, sort, page = 1 } = req.query;
-    const filter = {year, title, isbn, tags, price}
+      const { year, authorName, title, isbn, tag, price, sort, page = 1 } = req.query;
+    const filter = {year, authorName, title, isbn, tag, price}
     const filterparams = { filter, sort, page };
-
     const allbooks = await bookServices.getAllBooks(filterparams);
     res.send({ status: "OK", data: allbooks });
   } catch (error) {
