@@ -63,7 +63,7 @@ Book.init(
       },
     },
     isbn: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       validate: {
         len: [10, 13],
       },
@@ -71,7 +71,7 @@ Book.init(
     pageCount: {
       type: DataTypes.INTEGER,
       validate: {
-        min: 200,
+        min: 50,
       },
     },
     tag: {

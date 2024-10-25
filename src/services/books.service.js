@@ -77,6 +77,7 @@ const createBook = (newBook) => {
     const createdBook = bookModel.create(bookToInsert);
     return createdBook;
   } catch (error) {
+    console.error("error creating a book:", error.message);
     throw error;
   }
 };

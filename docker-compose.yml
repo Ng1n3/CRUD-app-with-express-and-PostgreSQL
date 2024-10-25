@@ -1,12 +1,47 @@
 version: '3.4'
 
 services:
-  buildingasimplecrudappwithexpressandpostgress:
-    image: buildingasimplecrudappwithexpressandpostgress
+  app:
+    image: simple-crud-app-with-express-and-postgres
     build:
       context: .
       dockerfile: ./Dockerfile
     environment:
       NODE_ENV: production
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      HOST: db
+      PORT: 3000
     ports:
       - 3000:3000
+    depends_on:
+      - db
+    networks:
+      - backend
+    
+  db:
+    image: postgres:17.0-alpine3.20
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${DB_USERNAME}"]
+      interval: 60s
+      timeout: 30s
+      retries: 5
+    restart: unless-stopped
+  
+volumes:
+    postgres_data:
+  
+networks:
+    backend:
+      driver: bridge

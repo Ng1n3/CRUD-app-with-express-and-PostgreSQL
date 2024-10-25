@@ -55,6 +55,7 @@ const createBook = async (req, res) => {
     const createdBook = await bookServices.createBook(newBook);
     res.status(201).send({ status: "OK", data: createdBook });
   } catch (error) {
+    console.error("FAIled to create a book". error.message)
     res
       .status(error?.status || 500)
       .send({ status: "FAILED", data: { error: error?.message || error } });
