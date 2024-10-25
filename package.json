@@ -2,9 +2,9 @@
   "name": "building-a-simple-crud-app-with-express-and-postgress",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node --watch src/index.js"
+    "start": "node --watch src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +18,9 @@
     "sequelize": "^6.34.0",
     "sequelize-cli": "^6.6.2",
     "validator": "^13.11.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   }
 }
