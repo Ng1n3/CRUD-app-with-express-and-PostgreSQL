@@ -3,11 +3,25 @@ const { createTestClient } = require('../setup.helper.js');
 
 describe('Book API Endpoints', () => {
   let testClient;
+  let bookId;
 
   beforeEach(async () => {
     testClient = createTestClient();
     await Book.destroy({ where: {}, force: true });
+    const book = await Book.create({
+      title: 'JavaScript: The Definitive Guide',
+      description:
+        'For web developers and other programmers interested in using JavaScript, this bestselling book provides the most comprehensive JavaScript material on the market.',
+      price: 4900,
+      year: 2020,
+      isbn: '1491951982',
+      pageCount: 706,
+      tag: ['Programming', 'JavaScript'],
+      authorName: ['David Flanagan'],
+    });
+    bookId = book.id;
   });
+  
 
   it('should create a new book', async () => {
     const bookData = {
@@ -27,4 +41,32 @@ describe('Book API Endpoints', () => {
     expect(res.body.status).toBe('OK');
     expect(res.body.data.title).toBe(bookData.title);
   });
+
+  it('should get the list of all books', async () => {
+    const res = await testClient.get('/api/v1/books');
+
+    expect(res.status).toBe(200);
+    expect(res.body.status).toBe('OK');
+    expect(Array.isArray(res.body.data)).toBe(true);
+    expect(res.body.data.length).toBeGreaterThan(0);
+    expect(res.body.data[0]).toHaveProperty('title');
+  });
+
+  it('Get a note by note Id', async() => {
+    const res = await testClient.get(`/api/v1/books/${bookId}`)
+
+    expect(res.status).toBe(200);
+    expect(res.body.status).toBe('OK')
+    expect(res.body.data).toHaveProperty('title')
+    expect(res.body.data).toHaveProperty('id', bookId)
+    expect(res.body.data).toHaveProperty('year')
+  })
+
+  it('Delete a note by Id', async() => {
+    const res = await testClient.delete(`/api/v1/books/${bookId}`)
+
+    expect(res.status).toBe(204)
+    expect(res.body).toEqual({});
+    // expect(res.body.status).toBe('OK')
+  })
 });
