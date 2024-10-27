@@ -1,6 +1,7 @@
 const Book = require('../../models/book.model');
 const { createTestClient } = require('../setup.helper.js');
 
+// Start writing tests
 describe('Book API Endpoints', () => {
   let testClient;
   let bookId;
