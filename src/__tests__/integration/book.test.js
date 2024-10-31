@@ -9,7 +9,7 @@ describe('Book API Endpoints', () => {
     testClient = createTestClient();
     await Book.destroy({ where: {}, force: true });
     const book = await Book.create({
-      title: 'JavaScript: The Definitive Guide',
+      title: 'JavaScript: The Definitive Guides',
       description:
         'For web developers and other programmers interested in using JavaScript, this bestselling book provides the most comprehensive JavaScript material on the market.',
       price: 4900,
@@ -21,7 +21,6 @@ describe('Book API Endpoints', () => {
     });
     bookId = book.id;
   });
-  
 
   it('should create a new book', async () => {
     const bookData = {
@@ -52,21 +51,36 @@ describe('Book API Endpoints', () => {
     expect(res.body.data[0]).toHaveProperty('title');
   });
 
-  it('Get a note by note Id', async() => {
-    const res = await testClient.get(`/api/v1/books/${bookId}`)
+  it('Should update the title of book', async () => {
+    const updatedTitle = 'JavaScript: The Definitive Guide';
+    const res = await testClient
+      .put(`/api/v1/books/${bookId}`)
+      .send({ title: updatedTitle });
+
+    console.log("respond", res.body);
+    expect(res.status).toBe(200);
+    expect(res.body.status).toBe('OK');
+    expect(res.body.data).toHaveProperty('title', updatedTitle);
+    expect(res.body.data).toHaveProperty('description');
+    expect(res.body.data).toHaveProperty('price');
+    expect(res.body.data).toHaveProperty('year');
+  });
+
+  it('Get a note by note Id', async () => {
+    const res = await testClient.get(`/api/v1/books/${bookId}`);
 
     expect(res.status).toBe(200);
-    expect(res.body.status).toBe('OK')
-    expect(res.body.data).toHaveProperty('title')
-    expect(res.body.data).toHaveProperty('id', bookId)
-    expect(res.body.data).toHaveProperty('year')
-  })
+    expect(res.body.status).toBe('OK');
+    expect(res.body.data).toHaveProperty('title');
+    expect(res.body.data).toHaveProperty('id', bookId);
+    expect(res.body.data).toHaveProperty('year');
+  });
 
-  it('Delete a note by Id', async() => {
-    const res = await testClient.delete(`/api/v1/books/${bookId}`)
+  it('Delete a note by Id', async () => {
+    const res = await testClient.delete(`/api/v1/books/${bookId}`);
 
-    expect(res.status).toBe(204)
+    expect(res.status).toBe(204);
     expect(res.body).toEqual({});
     // expect(res.body.status).toBe('OK')
-  })
+  });
 });

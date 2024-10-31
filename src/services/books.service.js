@@ -84,11 +84,12 @@ const createBook = (newBook) => {
 
 const updateBook = async (bookId, newupdate) => {
   try {
-    const updatedBook = await bookModel.update(newupdate, {
+    await bookModel.update(newupdate, {
       where: {
         id: bookId,
       },
     });
+    const updatedBook = await bookModel.findByPk(bookId)
     return updatedBook;
   } catch (error) {
     throw error;
