@@ -1,8 +1,10 @@
+require('dotenv').config({path: `.env.${process.env.NODE_ENV || 'development'}`})
+
 module.exports = {
   development: {
-    username: process.env.DB_USER,
+    username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
     dialect: 'postgres',
     port: process.env.DB_PORT || 5432,
@@ -15,9 +17,9 @@ module.exports = {
     logging: console.log
   },
   test: {
-    username: process.env.DB_USER,
+    username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
     dialect: 'postgres',
     port: process.env.DB_PORT || 5432,
@@ -30,9 +32,9 @@ module.exports = {
     logging: false // Disable logging in test environment
   },
   production: {
-    username: process.env.DB_USER,
+    username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
     dialect: 'postgres',
     port: process.env.DB_PORT || 5432,

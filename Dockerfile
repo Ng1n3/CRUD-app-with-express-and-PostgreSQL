@@ -12,6 +12,8 @@ RUN --mount=type=cache,target=/usr/src/app/.npm \
 
 COPY . .
 
+# RUN if  [ "$NODE_ENV" = "production"]; then cp .env.production .env;fi
+
 EXPOSE 3000
 
 RUN chown -R node /usr/src/app

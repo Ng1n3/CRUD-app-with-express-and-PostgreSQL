@@ -6,13 +6,17 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+    command: ["sh", "./wait-for-it.sh", "db", "5432", "--", "npm", "start"]
+    env_file:
+      - path: ./.env.production
+        required: true
     environment:
-      NODE_ENV: production
-      DB_DATABASE: ${DB_DATABASE}
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
-      HOST: db
-      PORT: 3000
+      - NODE_ENV=production
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - HOST=${DB_HOST}
+      - PORT=3000
     ports:
       - 3000:3000
     depends_on:
@@ -22,6 +26,8 @@ services:
     
   db:
     image: postgres:17.0-alpine3.20
+    env_file:
+      - .env.production
     environment:
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USERNAME}
