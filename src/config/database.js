@@ -1,4 +1,6 @@
-require('dotenv').config({path: `.env.${process.env.NODE_ENV || 'development'}`})
+require('dotenv').config({
+  path: `${process.env.NODE_ENV.env || 'development'}`,
+});
 
 const dbConfig = {
   development: {
@@ -12,9 +14,9 @@ const dbConfig = {
       max: 5,
       min: 0,
       acquire: 30000,
-      idle: 10000
+      idle: 10000,
     },
-    logging: console.log
+    logging: console.log,
   },
   test: {
     username: process.env.DB_USERNAME,
@@ -27,9 +29,9 @@ const dbConfig = {
       max: 5,
       min: 0,
       acquire: 30000,
-      idle: 10000
+      idle: 10000,
     },
-    logging: false // Disable logging in test environment
+    logging: false, // Disable logging in test environment
   },
   production: {
     username: process.env.DB_USERNAME,
@@ -42,16 +44,16 @@ const dbConfig = {
       max: 10,
       min: 0,
       acquire: 30000,
-      idle: 10000
+      idle: 10000,
     },
     logging: false,
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false // Useful for self-signed certificates
-      }
-    }
-  }
+        rejectUnauthorized: false, // Useful for self-signed certificates
+      },
+    },
+  },
 };
 
-module.exports = dbConfig
+module.exports = dbConfig;
