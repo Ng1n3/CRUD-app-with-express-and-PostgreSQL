@@ -15,7 +15,7 @@ jobs:
         image: postgres:alpine
         env:
           POSTGRES_DB: ${{ secrets.DB_DATABASE }}
-          POSTGRES_USER: ${{ secrets.DB_USER }}  # Fixed typo 'POSTGRES_USERNAME' to 'POSTGRES_USER'
+          POSTGRES_USER: ${{ secrets.DB_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
         ports:
           - 5432:5432
