@@ -1,32 +1,35 @@
-const { Sequelize } = require("sequelize");
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV || 'development'}`
+const { Sequelize } = require('sequelize');
+const dbConfig = require('../config/database');
+require('dotenv').config({
+  path: `${process.env.NODE_ENV.env || 'development'}`,
 });
 
+const env = process.env.NODE_ENV || 'development';
+const config = dbConfig[env];
+
 const sequelize = new Sequelize(
-  process.env.DB_DATABASE,
-  process.env.DB_USERNAME,
-  process.env.DB_PASSWORD,
+  config.database,
+  config.username,
+  config.password,
   {
-    host: process.env.DB_HOST || 'localhost',
-    dialect: "postgres",
-    port: 5432,
-    logging: console.log,
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
-    }
+    host: config.host,
+    dialect: config.dialect,
+    port: config.port,
+    logging: config.logging,
+    pool: config.pool,
   }
 );
 
-
 try {
   sequelize.authenticate();
-  console.log("Conection has been successfully established");
+  console.log(
+    `Conection has been successfully established for ${env} environment`
+  );
 } catch (error) {
-  console.error("Unable to connect to the database", error);
+  console.error(
+    `Unable to connect to the database in ${env} environment`,
+    error
+  );
 }
 
 module.exports = sequelize;

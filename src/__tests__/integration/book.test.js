@@ -57,7 +57,6 @@ describe('Book API Endpoints', () => {
       .put(`/api/v1/books/${bookId}`)
       .send({ title: updatedTitle });
 
-    console.log("respond", res.body);
     expect(res.status).toBe(200);
     expect(res.body.status).toBe('OK');
     expect(res.body.data).toHaveProperty('title', updatedTitle);
