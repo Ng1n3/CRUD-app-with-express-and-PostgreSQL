@@ -1,4 +1,4 @@
-name: NodeJS with Gulp
+name: NodeJS with Grunt
 
 on:
   push:
@@ -33,13 +33,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set Environment Variables
-        run: |
-          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> $GITHUB_ENV
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_ENV
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
-          echo "DB_HOST=localhost" >> $GITHUB_ENV
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -59,4 +52,4 @@ jobs:
         run: npm test
 
       - name: Build with Gulp
-        run: gulp
+        run: grunt
