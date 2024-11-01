@@ -44,13 +44,16 @@ jobs:
 
       - name: Wait for PostgreSQL to be ready
         run: |
-          until pg_isready -h localhost -p 5432 -U $${POSTGRES_USER}; do
+          until pg_isready -h localhost -p 5432 -U $${{ secrets.DB_USERNAME }}; do
             echo "Waiting for postgres..."
             sleep 2
           done
 
       - name: Test App code
         env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          NODE_ENV: test
           POSTGRES_DB: ${{ secrets.DB_DATABASE }}
           POSTGRES_USER: ${{ secrets.DB_USERNAME }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
