@@ -63,6 +63,7 @@ const createBook = async (req, res) => {
   }
 };
 
+// update a book
 const updateBook = async (req, res) => {
   const {
     body,
