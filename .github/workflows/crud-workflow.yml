@@ -9,9 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: book_api
 
     services:
-      postgres:
+      database:
         image: postgres:alpine
         env:
           POSTGRES_DB: ${{ secrets.DB_DATABASE }}
