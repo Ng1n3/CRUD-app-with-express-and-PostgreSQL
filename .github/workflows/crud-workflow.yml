@@ -50,6 +50,10 @@ jobs:
           done
 
       - name: Test App code
+        env:
+          POSTGRES_DB: ${{ secrets.DB_DATABASE }}
+          POSTGRES_USER: ${{ secrets.DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: npm test
 
       - name: Build with Gulp
