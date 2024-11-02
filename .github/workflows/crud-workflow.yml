@@ -51,7 +51,7 @@ jobs:
 
       - name: Test App code
         env:
-          DB_HOST: db
+          DB_HOST: database
           DB_PORT: 5432
           NODE_ENV: test
           POSTGRES_DB: ${{ secrets.DB_DATABASE }}
