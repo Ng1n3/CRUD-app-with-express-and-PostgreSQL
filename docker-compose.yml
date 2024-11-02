@@ -6,21 +6,32 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: ['sh', './wait-for-it.sh', 'db', '5432', '--', 'npm', 'start']
-    # environment:
-    #   - NODE_ENV=${NODE_ENV}
-    #   - DB_DATABASE=${DB_DATABASE}
-    #   - DB_USERNAME=${DB_USERNAME}
-    #   - DB_PASSWORD=${DB_PASSWORD}
-    #   - DB_HOST=${DB_HOST}
-    #   - PORT=${PORT}
+    command:
+      [
+        'sh',
+        './wait-for-it.sh',
+        'db',
+        '5432',
+        '--',
+        'npm',
+        'run',
+        'start:${NODE_ENV}',
+      ]
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - PORT=${PORT}
     ports:
-      - "${PORT}:${PORT}"
+      - '${PORT}:${PORT}'
     depends_on:
-      - db
-        # condition: service_healthy
+      db:
+        condition: service_healthy
     networks:
       - backend
+    restart: unless-stopped
 
   db:
     image: postgres:alpine

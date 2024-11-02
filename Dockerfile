@@ -9,7 +9,11 @@ COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 
 RUN --mount=type=cache,target=/usr/src/app/.npm \
   npm set cache /usr/src/app.npm && \
-  npm ci --only=production --silent && mv node_modules ../
+  if ["$NODE_ENV" = 'development' ]; then \
+    npm install; \
+  else \
+    npm ci --only=production; \
+  fi
 
 COPY . .
 
