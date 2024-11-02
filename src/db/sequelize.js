@@ -9,7 +9,7 @@ console.log('Database Configuration:', {
   username: process.env.DB_USERNAME,
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
-  hasPassword: !!process.env.DB_PASSWORD // Don't log the actual password
+  password: process.env.DB_PASSWORD // Don't log the actual password
 });
 
 const sequelize = new Sequelize(
