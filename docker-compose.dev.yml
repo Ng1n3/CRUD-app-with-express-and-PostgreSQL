@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  app:
+    extends:
+      file: ./docker-compose.yml
+      service: app
+    volumes:
+      - .:/usr/src/app
+
+  db:
+    extends:
+      file: ./docker-compose.yml
+      service: db
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    driver: local

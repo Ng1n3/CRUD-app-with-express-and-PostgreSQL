@@ -2,22 +2,20 @@ version: '3.4'
 
 services:
   app:
-    image: simple-crud-app-with-express-and-postgres
-    env_file:
-      - path: ./production.env
+    image: book-api
     build:
       context: .
       dockerfile: ./Dockerfile
     command: ['sh', './wait-for-it.sh', 'db', '5432', '--', 'npm', 'start']
-    environment:
-      - NODE_ENV=production
-      - DB_DATABASE=${DB_DATABASE}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=db
-      - PORT=3000
+    # environment:
+    #   - NODE_ENV=${NODE_ENV}
+    #   - DB_DATABASE=${DB_DATABASE}
+    #   - DB_USERNAME=${DB_USERNAME}
+    #   - DB_PASSWORD=${DB_PASSWORD}
+    #   - DB_HOST=${DB_HOST}
+    #   - PORT=${PORT}
     ports:
-      - 3000:3000
+      - "${PORT}:${PORT}"
     depends_on:
       - db
         # condition: service_healthy
@@ -26,8 +24,6 @@ services:
 
   db:
     image: postgres:alpine
-    env_file:
-      - path: ./production.env
     environment:
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USERNAME}

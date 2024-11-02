@@ -1,6 +1,7 @@
 FROM node:lts-alpine
 
-ENV NODE_ENV=production
+ARG NODE_ENV=production
+ENV NODE_ENV=$NODE_ENV
 
 WORKDIR /usr/src/app
 
@@ -20,4 +21,4 @@ RUN chown -R node /usr/src/app
 
 USER node
 
-CMD ["npm", "start"]
+CMD ["sh", "-c", "NODE_ENV=${NODE_ENV} npm run start:${NODE_ENV}"]
