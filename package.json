@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/server.js",
     "start:development": "NODE_ENV=development dotenv -e ./.env.development nodemon src/server.js",
-    "start:test": "NODE_ENV=test dotenv -e ./.env.test jest --forceExit --detectOpenHandles --verbose",
+    "start:test": "jest --forceExit --detectOpenHandles --verbose",
     "start:production": "NODE_ENV=production dotenv -e ./.env.production node src/server.js"
   },
   "keywords": [],
