@@ -2,6 +2,16 @@ const { Sequelize } = require('sequelize');
 
 const env = process.env.NODE_ENV || 'development';
 
+// Debug logging for environment variables
+console.log('Database Configuration:', {
+  environment: env,
+  database: process.env.DB_DATABASE,
+  username: process.env.DB_USERNAME,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  hasPassword: !!process.env.DB_PASSWORD // Don't log the actual password
+});
+
 const sequelize = new Sequelize(
   process.env.DB_DATABASE,
   process.env.DB_USERNAME,
@@ -10,7 +20,7 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     dialect: 'postgres',
     port: process.env.DB_PORT || 5432,
-    logging:env === 'development' ? console.log : false,
+    logging: env === 'development' ? console.log : false,
     pool: {
       max: env === 'production' ? 10 : 5,
       min: 0,
@@ -22,9 +32,9 @@ const sequelize = new Sequelize(
         ssl: {
           require: true,
           rejectUnauthorized: false,
-        }
-      }
-    })
+        },
+      },
+    }),
   }
 );
 
@@ -36,6 +46,7 @@ try {
 } catch (error) {
   console.error(
     `Unable to connect to the database in ${env} environment`,
+    error.message,
     error
   );
 }
