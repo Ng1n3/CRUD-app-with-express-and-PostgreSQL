@@ -51,9 +51,9 @@ jobs:
       
       - name: Check environment variables
         run: |
-          echo "DB_DATABASE=${{ secrets.DB_DATABASE:+set}}"
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME:+set}}"
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD:+set}}"
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE}}"
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME}}"
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD}}"
         
 
       - name: Test App code
