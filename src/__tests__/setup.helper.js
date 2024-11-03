@@ -1,7 +1,7 @@
 const req = require('supertest');
 const sequelize = require('../db/sequelize');
 const { app } = require('../app');
-
+require('dotenv').config();
 //Global setup
 beforeAll(async () => {
   try {
