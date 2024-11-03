@@ -3,16 +3,6 @@ require('dotenv').config()
 
 const env = process.env.NODE_ENV || 'development';
 
-// Debug logging for environment variables
-console.log('Database Configuration:', {
-  environment: env,
-  database: process.env.DB_DATABASE,
-  username: process.env.DB_USERNAME,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  password: process.env.DB_PASSWORD // Don't log the actual password
-});
-
 console.log('Current NODE_ENV:', process.env.NODE_ENV);
 if (!process.env.DB_DATABASE || !process.env.DB_USERNAME) {
   console.error('Missing required database configuration!');
