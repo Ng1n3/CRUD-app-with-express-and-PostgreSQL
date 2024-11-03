@@ -13,6 +13,13 @@ console.log('Database Configuration:', {
   password: process.env.DB_PASSWORD // Don't log the actual password
 });
 
+console.log('Current NODE_ENV:', process.env.NODE_ENV);
+if (!process.env.DB_DATABASE || !process.env.DB_USERNAME) {
+  console.error('Missing required database configuration!');
+  console.error('Available environment variables:', Object.keys(process.env));
+  throw new Error('Database configuration incomplete');
+}
+
 const sequelize = new Sequelize(
   process.env.DB_DATABASE,
   process.env.DB_USERNAME,
