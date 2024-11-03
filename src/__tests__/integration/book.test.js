@@ -1,6 +1,6 @@
 const Book = require('../../models/book.model');
 const { createTestClient } = require('../setup.helper.js');
-require('doten').config()
+require('dotenv').config()
 
 describe('Book API Endpoints', () => {
   let testClient;
