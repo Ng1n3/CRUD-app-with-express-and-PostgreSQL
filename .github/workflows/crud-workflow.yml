@@ -1,4 +1,4 @@
-name: NodeJS with Grunt
+name: NodeJS with Gulp
 
 on:
   push:
@@ -63,4 +63,4 @@ jobs:
           npm run start:test
 
       - name: Build with Gulp
-        run: grunt
+        run: gulp
